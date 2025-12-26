@@ -1,0 +1,1 @@
+{"type":"object","properties":{"nome":{"type":"string"},"descricao":{"type":"string"},"idEducadorResponsavel":{"type":"integer","format":"int64"}},"x-readme-ref-name":"UpdateDisciplinaDTO"}

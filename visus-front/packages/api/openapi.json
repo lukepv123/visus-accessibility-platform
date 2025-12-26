@@ -1,0 +1,3518 @@
+{
+    "openapi": "3.1.0",
+    "info": { "title": "OpenAPI definition", "version": "v0" },
+    "servers": [
+        {
+            "url": "http://localhost:8080",
+            "description": "Generated server url"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Módulo Disciplinas",
+            "description": "Responsável por operações relacionadas a Disciplinas dentro de uma Instiuição de Ensino"
+        },
+        {
+            "name": "Módulo de Gestores",
+            "description": "Lida com operações relacionadas à classe Gestor"
+        },
+        {
+            "name": "Authentication",
+            "description": "Responsável autenticação e registro de usuários"
+        },
+        {
+            "name": "Redefinição de Senha",
+            "description": "Responsável por solicitar e efetuar a redefinição da senha do usuáro"
+        },
+        {
+            "name": "Módulo de Estudantes",
+            "description": "Gerencia as operações relacionadas à classe Estudante"
+        },
+        {
+            "name": "Respostas",
+            "description": "Gerenciamento das respostas das tarefas"
+        },
+        {
+            "name": "Módulo Instituições de Ensino",
+            "description": "Gerencia as operações envolvendo instituições de ensino"
+        },
+        {
+            "name": "Módulo Comentários",
+            "description": "Responsável por operações relacionadas a Comentários dentro de uma Publicação"
+        },
+        {
+            "name": "Busca de Usuários",
+            "description": "Responsável por operações relacionadas a buscas de usuários"
+        },
+        {
+            "name": "Módulo Tarefas",
+            "description": "Responsável por operações relacionadas a Tarefas dentro de uma Disciplina"
+        },
+        {
+            "name": "Módulo Perfil de Acessibilidade",
+            "description": "Operações relacionadas ao Perfil de Acessibilidade atribuido a cada Estudante"
+        },
+        {
+            "name": "Módulo Publicações",
+            "description": "Responsável por operações relacionadas a Publicações dentro de uma Disciplina"
+        },
+        {
+            "name": "👨‍🏫 Educadores",
+            "description": "Gestão de educadores e suas formações acadêmicas"
+        }
+    ],
+    "paths": {
+        "/tarefas/{id}": {
+            "get": {
+                "tags": ["Módulo Tarefas"],
+                "summary": "Busca uma tarefa pelo ID",
+                "operationId": "getTarefaById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TarefaDetailsDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Módulo Tarefas"],
+                "summary": "Atualiza uma tarefa existente",
+                "operationId": "updateTarefa",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateTarefaDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SummaryTarefaDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Módulo Tarefas"],
+                "summary": "Remove uma tarefa existente",
+                "operationId": "removeTarefa",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    }
+                ],
+                "responses": { "200": { "description": "OK" } }
+            }
+        },
+        "/reset-password": {
+            "put": {
+                "tags": ["Redefinição de Senha"],
+                "summary": "Recebe o token e senha nova do usuário para redefiní-la",
+                "operationId": "updatePassword",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PasswordResetDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "A senha é alterada com sucesso",
+                        "content": { "*/*": { "schema": { "type": "object" } } }
+                    },
+                    "400": {
+                        "description": "Não foi possível atualizar a senha",
+                        "content": { "*/*": { "schema": { "type": "object" } } }
+                    }
+                }
+            }
+        },
+        "/publicacoes/{publicacaoId}": {
+            "get": {
+                "tags": ["Módulo Publicações"],
+                "description": "Obtém uma Publicação através de seu ID",
+                "operationId": "getPublicacao",
+                "parameters": [
+                    {
+                        "name": "publicacaoId",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Publicação obtida com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PublicacaoDetailsDTO"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Publicação não encontrada",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PublicacaoDetailsDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Módulo Publicações"],
+                "summary": "Atualiza as informações de uma Publicação",
+                "operationId": "updatePublicacao",
+                "parameters": [
+                    {
+                        "name": "publicacaoId",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdatePublicacaoDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Publicação atualizada com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PublicacaoDetailsDTO"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Disciplina não encontrada",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PublicacaoDetailsDTO"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Dados inválidos ou conflitantes",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PublicacaoDetailsDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Módulo Publicações"],
+                "summary": "Deleta uma Publicação a partir do seu ID",
+                "operationId": "deletePublicacao",
+                "parameters": [
+                    {
+                        "name": "publicacaoId",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Publicação deletada com sucesso",
+                        "content": { "*/*": { "schema": { "type": "object" } } }
+                    },
+                    "404": {
+                        "description": "Disciplina não encontrada",
+                        "content": { "*/*": { "schema": { "type": "object" } } }
+                    }
+                }
+            }
+        },
+        "/instituicoes/{id}": {
+            "get": {
+                "tags": ["Módulo Instituições de Ensino"],
+                "summary": "Obtém um Instituição de Ensino através do seu ID",
+                "operationId": "getInstituicaoById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Instituição de Ensino encontrada com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InstituicaoDetailsDTO"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Instituição de Ensino não encontrada",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InstituicaoDetailsDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Módulo Instituições de Ensino"],
+                "summary": "Atualiza as informações de uma Instituição de Ensino",
+                "operationId": "updateInstituicao",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateInstituicaoDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Atualização concluída",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InstituicaoDetailsDTO"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Dados inválidos",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InstituicaoDetailsDTO"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Instituição não encontrada",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InstituicaoDetailsDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/gestor/{id}": {
+            "get": {
+                "tags": ["Módulo de Gestores"],
+                "summary": "Obtém um Gestor de acordo com seu ID",
+                "operationId": "getGestorById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Gestor obtido com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GestorDetailsDTO"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Ocorreu erro durante o processamento da requsição",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GestorDetailsDTO"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Não foi possível obter o Gestor com o ID especificado",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GestorDetailsDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Módulo de Gestores"],
+                "summary": "Atualiza as informações de um Gestor",
+                "operationId": "updateGestor",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateGestorDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Gestor obtido com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GestorDetailsDTO"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Ocorreu erro durante o processamento da requsição",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GestorDetailsDTO"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Não foi possível obter o Gestor com o ID especificado",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GestorDetailsDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/estudantes/{id}": {
+            "get": {
+                "tags": ["Módulo de Estudantes"],
+                "summary": "Obtém um Estudante de acordo com seu ID",
+                "operationId": "buscarPorId",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Estudante obtido com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EstudanteSummaryDTO"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Estudante não encontrado",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EstudanteSummaryDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Módulo de Estudantes"],
+                "summary": "Atualiza as informações de um Estudante",
+                "operationId": "atualizar",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EstudanteUpdateDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Estudante atualizado com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EstudanteResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro na validação dos dados enviados",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EstudanteResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Estudante não encontrado",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EstudanteResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Módulo de Estudantes"],
+                "summary": "Remove um Estudante do sistema",
+                "operationId": "remover",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    }
+                ],
+                "responses": {
+                    "204": { "description": "Estudante removido com sucesso" },
+                    "404": { "description": "Estudante não encontrado" }
+                }
+            }
+        },
+        "/educadores/{id}": {
+            "get": {
+                "tags": ["👨‍🏫 Educadores"],
+                "summary": "Buscar Educador por ID",
+                "operationId": "getEducador",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EducadorResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": ["👨‍🏫 Educadores"],
+                "summary": "Atualiza um Educador",
+                "operationId": "updateEducador",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateEducadorDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Atualização realizada com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EducadorSummaryDTO"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Educador não encontrado",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EducadorSummaryDTO"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Dados conflitantes ou inválidos",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EducadorSummaryDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/disciplinas/{id}": {
+            "get": {
+                "tags": ["Módulo Disciplinas"],
+                "summary": "Obtém uma Disciplina através do seu ID",
+                "operationId": "getDisciplinaById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Disciplina obtida com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DisciplinaSummaryDTO"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Disciplina não encontrada",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DisciplinaSummaryDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Módulo Disciplinas"],
+                "summary": "Atualiza as informações de uma Disciplina",
+                "operationId": "updateDisciplina",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateDisciplinaDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Disciplina atualizada com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DisciplinaSummaryDTO"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Disciplina ou Educador responsável não encontrados",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DisciplinaSummaryDTO"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Dados inválidos ou conflitantes",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DisciplinaSummaryDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/comentarios/{id}": {
+            "get": {
+                "tags": ["Módulo Comentários"],
+                "summary": "Busca um comentário com base no seu ID",
+                "operationId": "getComentarioById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Comentário obtido com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ComentarioSummaryDTO"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Comentário não encontrado",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ComentarioSummaryDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Módulo Comentários"],
+                "summary": "Atualiza um comentário",
+                "operationId": "atualizarComentario",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateComentarioDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Comentário atualizado com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ComentarioSummaryDTO"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Comentário não encontrado",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ComentarioSummaryDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Módulo Comentários"],
+                "summary": "Atualiza um comentário",
+                "operationId": "removerComentario",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Comentário removido com sucesso",
+                        "content": { "*/*": { "schema": { "type": "object" } } }
+                    },
+                    "404": {
+                        "description": "Comentário não encontrado",
+                        "content": { "*/*": { "schema": { "type": "object" } } }
+                    }
+                }
+            }
+        },
+        "/acessibilidade/{id}": {
+            "get": {
+                "tags": ["Módulo Perfil de Acessibilidade"],
+                "summary": "Busca um Perfil de Acessibilidade de acordo com seu ID",
+                "operationId": "getPerfilById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Perfil de Acessibilidade obtido com sucesso",
+                        "content": { "*/*": { "schema": { "type": "object" } } }
+                    },
+                    "404": {
+                        "description": "Perfil de Acessibilidade não encontrado",
+                        "content": { "*/*": { "schema": { "type": "object" } } }
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Módulo Perfil de Acessibilidade"],
+                "summary": "Atualiza um Perfil de Acessibilidade",
+                "operationId": "updatePerfilAcessibilidade",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdatePerfilAcessibilidadeDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Perfil de Acessibilidade atualizado com sucesso",
+                        "content": { "*/*": { "schema": { "type": "object" } } }
+                    },
+                    "400": {
+                        "description": "Requisição tem parâmetros inválidos",
+                        "content": { "*/*": { "schema": { "type": "object" } } }
+                    },
+                    "404": {
+                        "description": "Perfil de Acessibilidade não encontrado",
+                        "content": { "*/*": { "schema": { "type": "object" } } }
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Módulo Perfil de Acessibilidade"],
+                "summary": "Remove um Perfil de Acessibilidade",
+                "operationId": "removePerfilAcessibilidade",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Perfil de Acessibilidade removido com sucesso",
+                        "content": { "*/*": { "schema": { "type": "object" } } }
+                    },
+                    "404": {
+                        "description": "Perfil de Acessibilidade não encontrado",
+                        "content": { "*/*": { "schema": { "type": "object" } } }
+                    }
+                }
+            }
+        },
+        "/tarefas": {
+            "post": {
+                "tags": ["Módulo Tarefas"],
+                "summary": "Cria uma nova tarefa",
+                "operationId": "createTarefa",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateTarefaDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SummaryTarefaDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/respostas": {
+            "post": {
+                "tags": ["Respostas"],
+                "summary": "Cria uma nova resposta de texto para uma tarefa",
+                "operationId": "enviarResposta",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateRespostaDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RespostaDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/respostas/upload": {
+            "post": {
+                "tags": ["Respostas"],
+                "summary": "Cria uma nova resposta com upload de arquivo",
+                "operationId": "criarRespostaComUpload",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateRespostaMultipartDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RespostaDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/reset-password/validate": {
+            "post": {
+                "tags": ["Redefinição de Senha"],
+                "summary": "Valida o token enviado através do email",
+                "operationId": "validateToken",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "O token é válido",
+                        "content": { "*/*": { "schema": { "type": "object" } } }
+                    },
+                    "400": {
+                        "description": "O token não é válido",
+                        "content": { "*/*": { "schema": { "type": "object" } } }
+                    }
+                }
+            }
+        },
+        "/reset-password/forgot-password": {
+            "post": {
+                "tags": ["Redefinição de Senha"],
+                "summary": "Solicita redefinição de senha através do e-mail",
+                "operationId": "forgotPassword",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RequestResetDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Caso o e-mail existir, será enviado um link com token de redefinição",
+                        "content": { "*/*": { "schema": { "type": "object" } } }
+                    }
+                }
+            }
+        },
+        "/publicacoes": {
+            "post": {
+                "tags": ["Módulo Publicações"],
+                "summary": "Cria uma Publicação",
+                "operationId": "createPublicacao",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreatePublicacaoDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Publicação criada com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PublicacaoSummaryDTO"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "O Educador que está realizando a Publicação não é o responsável pela Disciplina",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PublicacaoSummaryDTO"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Disciplina não encontrada",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PublicacaoSummaryDTO"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Dados inválidos ou conflitantes",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PublicacaoSummaryDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/instituicoes": {
+            "get": {
+                "tags": ["Módulo Instituições de Ensino"],
+                "summary": "Obtém uma lista com as instituições de ensino cadastradas no sistema",
+                "operationId": "getInstituicoes",
+                "responses": {
+                    "200": {
+                        "description": "Lista retornada com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/InstituicaoDetailsDTO"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Nenhuma instituição encontrada",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/InstituicaoDetailsDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": ["Módulo Instituições de Ensino"],
+                "summary": "Realiza a criação de instituições, vinculando automaticamente o Gestor que realizou a solicitação",
+                "operationId": "createInstituicao",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateInstituicaoDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Instituição de Ensino criada com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InstituicaoDetailsDTO"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Dados inválidos ou ausentes",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InstituicaoDetailsDTO"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Email ou CNPJ já cadastrados",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InstituicaoDetailsDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/instituicoes/{instituicaoId}/usuarios/{usuarioId}": {
+            "post": {
+                "tags": ["Módulo Instituições de Ensino"],
+                "summary": "Adiciona Usuário a uma Instituição de Ensino",
+                "operationId": "addUsuarioToInstituicao",
+                "parameters": [
+                    {
+                        "name": "instituicaoId",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    },
+                    {
+                        "name": "usuarioId",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usuário adicionado com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UsuarioSummaryDTO"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Instituição ou Usuário não encontrados",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UsuarioSummaryDTO"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Usuário já vinculado a uma Instituição de Ensino",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UsuarioSummaryDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Módulo Instituições de Ensino"],
+                "summary": "Remove Usuário de uma Instituição de Ensino",
+                "operationId": "removeUsuarioFromInstituicao",
+                "parameters": [
+                    {
+                        "name": "instituicaoId",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    },
+                    {
+                        "name": "usuarioId",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usuário removidos com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UsuarioSummaryDTO"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Instituição ou Usuário não encontrados",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UsuarioSummaryDTO"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Usuário não está associado a Instituição de Ensino",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UsuarioSummaryDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/educadores/{id}/formacoes": {
+            "get": {
+                "tags": ["👨‍🏫 Educadores"],
+                "operationId": "listarFormacoes",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FormacaoListResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": ["👨‍🏫 Educadores"],
+                "summary": "Adicionar nova formação ao educador",
+                "operationId": "adicionarFormacao",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FormacaoRequestDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Formação adicionada com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EducadorResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/disciplinas": {
+            "post": {
+                "tags": ["Módulo Disciplinas"],
+                "summary": "Cria uma Disciplina",
+                "operationId": "createDisciplina",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateDisciplinaDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Disciplina criada com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DisciplinaSummaryDTO"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Instituição de Ensino ou Educador não encontrados",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DisciplinaSummaryDTO"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Dados inválidos ou conflitantes",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DisciplinaSummaryDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/disciplinas/{id}/estudantes": {
+            "get": {
+                "tags": ["Módulo Disciplinas"],
+                "summary": "Obtém os Estudantes matriculados em uma Instituição de Ensino",
+                "operationId": "getEstudantesFromDisciplina",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "exclusiveMinimum": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Estudantes obtidos com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/EstudanteSummaryDTO"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Nenhum Estudante está matriculado nesta Disciplina",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/EstudanteSummaryDTO"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Disciplina não encontrada",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/EstudanteSummaryDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": ["Módulo Disciplinas"],
+                "summary": "Adiciona um Estudante a uma Disciplina",
+                "operationId": "addEstudanteToDisciplina",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "exclusiveMinimum": 0
+                        }
+                    },
+                    {
+                        "name": "estudanteId",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "exclusiveMinimum": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Estudante adicionado com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/EstudanteSummaryDTO"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Estudante ou Disciplina não encontrados",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/EstudanteSummaryDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Módulo Disciplinas"],
+                "summary": "Adiciona um Estudante a uma Disciplina",
+                "operationId": "removeEstudanteToDisciplina",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "exclusiveMinimum": 0
+                        }
+                    },
+                    {
+                        "name": "estudanteId",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "exclusiveMinimum": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Estudante removido com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/EstudanteSummaryDTO"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Estudante ou Disciplina não encontrados",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/EstudanteSummaryDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/comentarios/responder/publicacao": {
+            "post": {
+                "tags": ["Módulo Comentários"],
+                "summary": "Adiciona um comentário a uma Publicação",
+                "operationId": "responderPublicacao",
+                "parameters": [
+                    {
+                        "name": "publicacaoId",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "exclusiveMinimum": 0
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateComentarioDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Comentário criado com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ComentarioSummaryDTO"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Publicação ou Usuário Autenticado não encontrados",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ComentarioSummaryDTO"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Dados inválidos ou conflitantes",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ComentarioSummaryDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/comentarios/responder/comentario": {
+            "post": {
+                "tags": ["Módulo Comentários"],
+                "summary": "Responde um comentário em uma Publicação",
+                "operationId": "responderComentario",
+                "parameters": [
+                    {
+                        "name": "comentarioId",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "exclusiveMinimum": 0
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateComentarioDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Comentário criado com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ComentarioSummaryDTO"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Comentário, Publicação ou Usuário Autenticado não encontrados",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ComentarioSummaryDTO"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Dados inválidos ou conflitantes",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ComentarioSummaryDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/register": {
+            "post": {
+                "tags": ["Authentication"],
+                "summary": "Realiza o registro de usuários",
+                "operationId": "register",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegisterDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuário registrado com sucesso",
+                        "content": { "*/*": { "schema": { "type": "object" } } }
+                    },
+                    "400": {
+                        "description": "Requisição tem parâmetros inválidos",
+                        "content": { "*/*": { "schema": { "type": "object" } } }
+                    }
+                }
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "tags": ["Authentication"],
+                "summary": "Realiza a autenticação de usuários",
+                "operationId": "login",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AuthenticationDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Usuário autenticado com sucesso",
+                        "content": { "*/*": { "schema": { "type": "object" } } }
+                    },
+                    "400": {
+                        "description": "Requisição tem parâmetros inválidos",
+                        "content": { "*/*": { "schema": { "type": "object" } } }
+                    }
+                }
+            }
+        },
+        "/arquivos/upload/{disciplinaId}": {
+            "post": {
+                "tags": ["arquivo-controller"],
+                "summary": "Faz upload de um arquivo para uma disciplina",
+                "operationId": "uploadArquivo",
+                "parameters": [
+                    {
+                        "name": "disciplinaId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "exclusiveMinimum": 0
+                        }
+                    },
+                    {
+                        "name": "descricao",
+                        "in": "query",
+                        "required": false,
+                        "schema": { "type": "string" }
+                    },
+                    {
+                        "name": "usuarioId",
+                        "in": "query",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "arquivo": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "required": ["arquivo"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Arquivo enviado com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ArquivoDTO"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Disciplina ou Educador não encontrados",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ArquivoDTO"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Falha ao enviar o arquivo",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ArquivoDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/acessibilidade/estudante": {
+            "post": {
+                "tags": ["Módulo Perfil de Acessibilidade"],
+                "summary": "Cadastra um novo perfil de acessibilidade para um Estudante",
+                "operationId": "createPerfilAcessibilidade",
+                "parameters": [
+                    {
+                        "name": "estudanteId",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "exclusiveMinimum": 0
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreatePerfilAcessibilidadeDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Perfil de Acessibilidade registrado com sucesso",
+                        "content": { "*/*": { "schema": { "type": "object" } } }
+                    },
+                    "400": {
+                        "description": "Requisição tem parâmetros inválidos",
+                        "content": { "*/*": { "schema": { "type": "object" } } }
+                    },
+                    "404": {
+                        "description": "Estudante não encontrado",
+                        "content": { "*/*": { "schema": { "type": "object" } } }
+                    }
+                }
+            }
+        },
+        "/respostas/{id}/avaliar": {
+            "patch": {
+                "tags": ["Respostas"],
+                "summary": "Avalia uma resposta enviada por um estudante",
+                "operationId": "avaliarResposta",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AvaliarRespostaDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RespostaDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/usuarios": {
+            "get": {
+                "tags": ["Busca de Usuários"],
+                "summary": "Busca todos os usuários",
+                "operationId": "getAllUsuarios",
+                "responses": {
+                    "200": {
+                        "description": "Lista de usuários retornada com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UsuarioDetailsDTO"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Nenhum usuário encontrado",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UsuarioDetailsDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/usuarios/{id}": {
+            "get": {
+                "tags": ["Busca de Usuários"],
+                "summary": "Busca um usuário com base no seu ID",
+                "operationId": "getUsuarioById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Busca realizada com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsuarioDetailsDTO"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Usuário não encontrado",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsuarioDetailsDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tarefas/disciplina/{disciplinaId}": {
+            "get": {
+                "tags": ["Módulo Tarefas"],
+                "summary": "Lista todas as tarefas de uma disciplina",
+                "operationId": "getTarefasByDisciplina",
+                "parameters": [
+                    {
+                        "name": "disciplinaId",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/SummaryTarefaDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/publicacoes/disciplina": {
+            "get": {
+                "tags": ["Módulo Publicações"],
+                "summary": "Busca as Publicações em uma Disciplina",
+                "operationId": "getPublicacoes",
+                "parameters": [
+                    {
+                        "name": "discplinaId",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "exclusiveMinimum": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Publicações listadas com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/PublicacaoDetailsDTO"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Não há Publicações cadastradas nesta Disciplina",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/PublicacaoDetailsDTO"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Disciplina não encontrada",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/PublicacaoDetailsDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/instituicoes/{instituicaoId}/usuarios": {
+            "get": {
+                "tags": ["Módulo Instituições de Ensino"],
+                "summary": "Lista os usuários membros de uma determinada Instituição de Ensino",
+                "operationId": "getUsuariosFromInstituicao",
+                "parameters": [
+                    {
+                        "name": "instituicaoId",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Dados listados com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UsuarioSummaryDTO"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Nenhum usuário para listar",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UsuarioSummaryDTO"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Instituição não encontrada",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UsuarioSummaryDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/instituicoes/getByEmail": {
+            "get": {
+                "tags": ["Módulo Instituições de Ensino"],
+                "operationId": "getInstituicaoByEmail",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InstituicaoEmailDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InstituicaoDetailsDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/instituicoes/getByCNPJ": {
+            "get": {
+                "tags": ["Módulo Instituições de Ensino"],
+                "summary": "Obtém um Instituição de Ensino através do seu CNPJ",
+                "operationId": "getInstituicaoByCnpj",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InstituicaoCnpjDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Instituição de Ensino encontrada com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InstituicaoDetailsDTO"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Instituição de Ensino não encontrada",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InstituicaoDetailsDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/gestor": {
+            "get": {
+                "tags": ["Módulo de Gestores"],
+                "summary": "Obtém um Gestor de acordo com seu e-mail",
+                "operationId": "getGestorByEmail",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/GestorGetByEmailDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Gestor obtido com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GestorDetailsDTO"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Ocorreu erro durante o processamento da requsição",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GestorDetailsDTO"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Não foi possível obter o Gestor com o ID especificado",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GestorDetailsDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/estudantes": {
+            "get": {
+                "tags": ["Módulo de Estudantes"],
+                "summary": "Lista Estudantes com filtros opcionais",
+                "operationId": "listar",
+                "parameters": [
+                    {
+                        "name": "anoEscolar",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "PRIMEIRO_ANO",
+                                "SEGUNDO_ANO",
+                                "TERCEIRO_ANO",
+                                "QUARTO_ANO",
+                                "QUINTO_ANO",
+                                "SEXTO_ANO",
+                                "SETIMO_ANO",
+                                "OITAVO_ANO",
+                                "NONO_ANO",
+                                "PRIMEIO_ANO_EM",
+                                "SEGUNDO_ANO_EM",
+                                "TERCEIRO_ANO_EM"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "periodo",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": ["MATUTINO", "VESPERTINO", "NOTURNO"]
+                        }
+                    },
+                    {
+                        "name": "nome",
+                        "in": "query",
+                        "required": false,
+                        "schema": { "type": "string" }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de estudantes obtida com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/EstudanteListDTO"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Nenhum estudante encontrado",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/EstudanteListDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/disciplinas/instituicao": {
+            "get": {
+                "tags": ["Módulo Disciplinas"],
+                "summary": "Obtém as Disciplinas cadastradas em uma determinada Instituição de Ensino",
+                "operationId": "getDisciplinasByInstituicao",
+                "parameters": [
+                    {
+                        "name": "instituicaoId",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "exclusiveMinimum": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Disciplinas obtidas com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/DisciplinaSummaryDTO"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "A Instituição de Ensino não tem nenhuma Disciplina cadastrada",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/DisciplinaSummaryDTO"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Instituição de Ensino não encontrada",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/DisciplinaSummaryDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/disciplinas/estudante": {
+            "get": {
+                "tags": ["Módulo Disciplinas"],
+                "summary": "Obtém as Disciplinas nas quais um estudante está matriculado",
+                "operationId": "getDisciplinasByEstudante",
+                "parameters": [
+                    {
+                        "name": "estudanteId",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "exclusiveMinimum": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Disciplinas obtidas com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/DisciplinaSummaryDTO"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "O estudante não está matriculado em nenhuma disciplina",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/DisciplinaSummaryDTO"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Estudante não encontrado",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/DisciplinaSummaryDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/disciplinas/educador": {
+            "get": {
+                "tags": ["Módulo Disciplinas"],
+                "summary": "Obtém as Disciplinas ministradas por um Educador",
+                "operationId": "getDisciplinasByEducador",
+                "parameters": [
+                    {
+                        "name": "educadorId",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "exclusiveMinimum": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Disciplinas obtidas com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/DisciplinaSummaryDTO"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Educador não encontrado",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/DisciplinaSummaryDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/comentarios/publicacao": {
+            "get": {
+                "tags": ["Módulo Comentários"],
+                "summary": "Busca comentários-pai de uma Publicação",
+                "operationId": "obterComentariosDaPublicacao",
+                "parameters": [
+                    {
+                        "name": "publicacaoId",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "exclusiveMinimum": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Comentário obtidos com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ComentarioSummaryDTO"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Publicação não possui comentários",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ComentarioSummaryDTO"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Publicação não encontrada",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ComentarioSummaryDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/arquivos/download/{arquivoId}": {
+            "get": {
+                "tags": ["arquivo-controller"],
+                "summary": "Baixa um arquivo pelo ID",
+                "operationId": "downloadArquivo",
+                "parameters": [
+                    {
+                        "name": "arquivoId",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/arquivos/disciplina/{disciplinaId}": {
+            "get": {
+                "tags": ["arquivo-controller"],
+                "summary": "Lista todos os arquivos de uma disciplina",
+                "operationId": "listarArquivos",
+                "parameters": [
+                    {
+                        "name": "disciplinaId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "exclusiveMinimum": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Arquivos listados com sucesso",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ArquivoDTO"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Nenhum arquivo encontrado",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ArquivoDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/acessibilidade/estudante/{id}": {
+            "get": {
+                "tags": ["Módulo Perfil de Acessibilidade"],
+                "summary": "Busca um Perfil de Acessibilidade de acordo com seu Estudante",
+                "operationId": "getPerfilByEstudanteId",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Perfil de Acessibilidade obtido com sucesso",
+                        "content": { "*/*": { "schema": { "type": "object" } } }
+                    },
+                    "404": {
+                        "description": "Perfil de Acessibilidade ou Estudante não encontrado",
+                        "content": { "*/*": { "schema": { "type": "object" } } }
+                    }
+                }
+            }
+        },
+        "/educadores/{id}/formacoes/{formacaoId}": {
+            "delete": {
+                "tags": ["👨‍🏫 Educadores"],
+                "summary": "Remover formação do educador",
+                "operationId": "removerFormacao",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    },
+                    {
+                        "name": "formacaoId",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    }
+                ],
+                "responses": {
+                    "204": { "description": "Formação removida com sucesso" }
+                }
+            }
+        },
+        "/arquivos/{arquivoId}": {
+            "delete": {
+                "tags": ["arquivo-controller"],
+                "summary": "Deleta um arquivo (restrições: estudantes só podem deletar os próprios arquivos)",
+                "operationId": "deletarArquivo",
+                "parameters": [
+                    {
+                        "name": "arquivoId",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    },
+                    {
+                        "name": "usuarioId",
+                        "in": "query",
+                        "required": true,
+                        "schema": { "type": "integer", "format": "int64" }
+                    },
+                    {
+                        "name": "isEducador",
+                        "in": "query",
+                        "required": false,
+                        "schema": { "type": "boolean", "default": false }
+                    }
+                ],
+                "responses": { "200": { "description": "OK" } }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "UpdateTarefaDTO": {
+                "type": "object",
+                "properties": {
+                    "titulo": { "type": "string" },
+                    "conteudo": { "type": "string" },
+                    "dataExpiracao": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "valorTotal": { "type": "number", "format": "double" },
+                    "permitirArquivoResposta": { "type": "boolean" }
+                }
+            },
+            "SummaryTarefaDTO": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "integer", "format": "int64" },
+                    "titulo": { "type": "string" },
+                    "resumoConteudo": { "type": "string" },
+                    "dataCriacao": { "type": "string", "format": "date-time" },
+                    "dataExpiracao": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "valorTotal": { "type": "number", "format": "double" },
+                    "educadorResponsavel": { "type": "string" },
+                    "disciplinaId": { "type": "integer", "format": "int64" }
+                }
+            },
+            "PasswordResetDTO": {
+                "type": "object",
+                "properties": {
+                    "token": { "type": "string", "minLength": 1 },
+                    "password": { "type": "string", "minLength": 1 }
+                },
+                "required": ["password", "token"]
+            },
+            "UpdatePublicacaoDTO": {
+                "type": "object",
+                "properties": {
+                    "titulo": { "type": "string" },
+                    "conteudo": { "type": "string" },
+                    "caminhoAnexo": { "type": "string" }
+                }
+            },
+            "EducadorSummaryDTO": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "integer", "format": "int64" },
+                    "nome": { "type": "string" },
+                    "email": { "type": "string" },
+                    "matricula": { "type": "string" },
+                    "titulo": { "type": "string" }
+                }
+            },
+            "PublicacaoDetailsDTO": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "integer", "format": "int64" },
+                    "titulo": { "type": "string" },
+                    "conteudo": { "type": "string" },
+                    "caminhoAnexo": { "type": "string" },
+                    "dataEnvio": { "type": "string", "format": "date-time" },
+                    "autor": {
+                        "$ref": "#/components/schemas/EducadorSummaryDTO"
+                    }
+                }
+            },
+            "Endereco": {
+                "type": "object",
+                "properties": {
+                    "logradouro": { "type": "string", "minLength": 1 },
+                    "numero": { "type": "string", "minLength": 1 },
+                    "bairro": { "type": "string", "minLength": 1 },
+                    "cidade": { "type": "string", "minLength": 1 },
+                    "estado": { "type": "string", "minLength": 1 },
+                    "cep": { "type": "string", "minLength": 1 }
+                },
+                "required": [
+                    "bairro",
+                    "cep",
+                    "cidade",
+                    "estado",
+                    "logradouro",
+                    "numero"
+                ]
+            },
+            "UpdateInstituicaoDTO": {
+                "type": "object",
+                "properties": {
+                    "nome": { "type": "string", "minLength": 1 },
+                    "telefone": { "type": "string", "minLength": 1 },
+                    "cnpj": { "type": "string", "minLength": 1 },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "minLength": 1
+                    },
+                    "endereco": { "$ref": "#/components/schemas/Endereco" }
+                },
+                "required": ["cnpj", "email", "endereco", "nome", "telefone"]
+            },
+            "InstituicaoDetailsDTO": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "integer", "format": "int64" },
+                    "nome": { "type": "string" },
+                    "telefone": { "type": "string" },
+                    "email": { "type": "string" },
+                    "cnpj": { "type": "string" },
+                    "endereco": { "$ref": "#/components/schemas/Endereco" }
+                }
+            },
+            "UpdateGestorDTO": {
+                "type": "object",
+                "properties": {
+                    "nome": { "type": "string" },
+                    "telefone": { "type": "string" },
+                    "genero": {
+                        "type": "string",
+                        "enum": [
+                            "MASCULINO",
+                            "FEMININO",
+                            "OUTRO",
+                            "NAO_INFORMAR"
+                        ]
+                    },
+                    "dataNascimento": { "type": "string", "format": "date" },
+                    "matricula": { "type": "string" },
+                    "cargo": { "type": "string" }
+                }
+            },
+            "GestorDetailsDTO": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "integer", "format": "int64" },
+                    "nome": { "type": "string" },
+                    "cpf": { "type": "string" },
+                    "email": { "type": "string" },
+                    "telefone": { "type": "string" },
+                    "genero": {
+                        "type": "string",
+                        "enum": [
+                            "MASCULINO",
+                            "FEMININO",
+                            "OUTRO",
+                            "NAO_INFORMAR"
+                        ]
+                    },
+                    "dataNascimento": { "type": "string", "format": "date" },
+                    "cargo": { "type": "string" },
+                    "instituicao": {
+                        "$ref": "#/components/schemas/InstituicaoDetailsDTO"
+                    }
+                }
+            },
+            "EstudanteUpdateDTO": {
+                "type": "object",
+                "properties": {
+                    "nome": { "type": "string" },
+                    "telefone": { "type": "string" },
+                    "genero": {
+                        "type": "string",
+                        "enum": [
+                            "MASCULINO",
+                            "FEMININO",
+                            "OUTRO",
+                            "NAO_INFORMAR"
+                        ]
+                    },
+                    "dataNascimento": { "type": "string", "format": "date" }
+                }
+            },
+            "EstudanteResponseDTO": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "integer", "format": "int64" },
+                    "nome": { "type": "string" },
+                    "cpf": { "type": "string" },
+                    "email": { "type": "string" },
+                    "matricula": { "type": "string" },
+                    "periodo": {
+                        "type": "string",
+                        "enum": ["MATUTINO", "VESPERTINO", "NOTURNO"]
+                    },
+                    "anoEscolar": {
+                        "type": "string",
+                        "enum": [
+                            "PRIMEIRO_ANO",
+                            "SEGUNDO_ANO",
+                            "TERCEIRO_ANO",
+                            "QUARTO_ANO",
+                            "QUINTO_ANO",
+                            "SEXTO_ANO",
+                            "SETIMO_ANO",
+                            "OITAVO_ANO",
+                            "NONO_ANO",
+                            "PRIMEIO_ANO_EM",
+                            "SEGUNDO_ANO_EM",
+                            "TERCEIRO_ANO_EM"
+                        ]
+                    },
+                    "telefone": { "type": "string" },
+                    "genero": {
+                        "type": "string",
+                        "enum": [
+                            "MASCULINO",
+                            "FEMININO",
+                            "OUTRO",
+                            "NAO_INFORMAR"
+                        ]
+                    },
+                    "dataNascimento": { "type": "string", "format": "date" },
+                    "instituicao": {
+                        "$ref": "#/components/schemas/InstituicaoDetailsDTO"
+                    }
+                }
+            },
+            "UpdateEducadorDTO": {
+                "type": "object",
+                "properties": {
+                    "nome": { "type": "string" },
+                    "telefone": { "type": "string" },
+                    "genero": {
+                        "type": "string",
+                        "enum": [
+                            "MASCULINO",
+                            "FEMININO",
+                            "OUTRO",
+                            "NAO_INFORMAR"
+                        ]
+                    },
+                    "dataNascimento": { "type": "string", "format": "date" },
+                    "matricula": { "type": "string" },
+                    "titulo": { "type": "string" }
+                }
+            },
+            "UpdateDisciplinaDTO": {
+                "type": "object",
+                "properties": {
+                    "nome": { "type": "string" },
+                    "descricao": { "type": "string" },
+                    "idEducadorResponsavel": {
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                }
+            },
+            "DisciplinaSummaryDTO": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "integer", "format": "int64" },
+                    "nome": { "type": "string" },
+                    "descricao": { "type": "string" },
+                    "educadorResponsavel": { "type": "string" },
+                    "instituicao": { "type": "string" },
+                    "alunos": { "type": "integer", "format": "int32" }
+                }
+            },
+            "UpdateComentarioDTO": {
+                "type": "object",
+                "properties": {
+                    "conteudo": {
+                        "type": "string",
+                        "maxLength": 280,
+                        "minLength": 0
+                    }
+                }
+            },
+            "ComentarioSummaryDTO": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "integer", "format": "int64" },
+                    "conteudo": { "type": "string" },
+                    "autor": {
+                        "$ref": "#/components/schemas/UsuarioSummaryDTO"
+                    },
+                    "dataCriacao": { "type": "string", "format": "date-time" },
+                    "respostas": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/RespostaAComentarioSummaryDTO"
+                        }
+                    }
+                }
+            },
+            "RespostaAComentarioSummaryDTO": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "integer", "format": "int64" },
+                    "conteudo": { "type": "string" },
+                    "autor": {
+                        "$ref": "#/components/schemas/UsuarioSummaryDTO"
+                    },
+                    "dataCriacao": { "type": "string", "format": "date-time" }
+                }
+            },
+            "UsuarioSummaryDTO": {
+                "type": "object",
+                "description": "Sumário de usuários",
+                "properties": {
+                    "id": { "type": "integer", "format": "int64" },
+                    "nome": { "type": "string" },
+                    "email": { "type": "string" },
+                    "funcao": { "type": "string" }
+                }
+            },
+            "UpdatePerfilAcessibilidadeDTO": {
+                "type": "object",
+                "properties": {
+                    "tipoDeficiencia": {
+                        "type": "string",
+                        "enum": [
+                            "NENHUMA",
+                            "VISUAL",
+                            "AUDITIVA",
+                            "MOTORA",
+                            "COGNITIVA",
+                            "OUTRA"
+                        ]
+                    },
+                    "usaLeitorDeTela": { "type": "boolean" },
+                    "modoAltoContraste": { "type": "boolean" },
+                    "tamanhoFonte": { "type": "integer", "format": "int32" },
+                    "talkBack": { "type": "boolean" }
+                }
+            },
+            "CreateTarefaDTO": {
+                "type": "object",
+                "properties": {
+                    "titulo": { "type": "string", "minLength": 1 },
+                    "conteudo": { "type": "string", "minLength": 1 },
+                    "disciplinaId": { "type": "integer", "format": "int64" },
+                    "autorId": { "type": "integer", "format": "int64" },
+                    "dataExpiracao": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "valorTotal": { "type": "number", "format": "double" },
+                    "permitirArquivoResposta": { "type": "boolean" }
+                },
+                "required": [
+                    "autorId",
+                    "conteudo",
+                    "dataExpiracao",
+                    "disciplinaId",
+                    "titulo",
+                    "valorTotal"
+                ]
+            },
+            "CreateRespostaDTO": {
+                "type": "object",
+                "properties": {
+                    "tarefaId": { "type": "integer", "format": "int64" },
+                    "estudanteId": { "type": "integer", "format": "int64" },
+                    "caminhoAnexo": { "type": "string" },
+                    "conteudoTexto": { "type": "string" }
+                },
+                "required": ["estudanteId", "tarefaId"]
+            },
+            "ArquivoDTO": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "integer", "format": "int64" },
+                    "nomeOriginal": { "type": "string" },
+                    "caminho": { "type": "string" },
+                    "dataEnvio": { "type": "string", "format": "date-time" },
+                    "tipoMime": { "type": "string" },
+                    "enviadoPor": { "type": "string" }
+                }
+            },
+            "RespostaDTO": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "integer", "format": "int64" },
+                    "estudanteNome": { "type": "string" },
+                    "nota": { "type": "number", "format": "double" },
+                    "comentarioEducador": { "type": "string" },
+                    "arquivo": { "$ref": "#/components/schemas/ArquivoDTO" },
+                    "conteudoTexto": { "type": "string" },
+                    "dataUpload": { "type": "string", "format": "date-time" }
+                }
+            },
+            "CreateRespostaMultipartDTO": {
+                "type": "object",
+                "properties": {
+                    "tarefaId": { "type": "integer", "format": "int64" },
+                    "conteudoTexto": { "type": "string" },
+                    "arquivo": { "type": "string", "format": "binary" }
+                }
+            },
+            "RequestResetDTO": {
+                "type": "object",
+                "properties": {
+                    "email": { "type": "string", "format": "email" }
+                }
+            },
+            "CreatePublicacaoDTO": {
+                "type": "object",
+                "properties": {
+                    "titulo": {
+                        "type": "string",
+                        "maxLength": 120,
+                        "minLength": 0
+                    },
+                    "conteudo": {
+                        "type": "string",
+                        "maxLength": 5000,
+                        "minLength": 0
+                    },
+                    "caminhoAnexo": { "type": "string" },
+                    "disciplinaId": { "type": "integer", "format": "int64" },
+                    "educadorId": { "type": "integer", "format": "int64" }
+                },
+                "required": ["conteudo", "disciplinaId", "educadorId", "titulo"]
+            },
+            "PublicacaoSummaryDTO": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "integer", "format": "int64" },
+                    "titulo": { "type": "string" },
+                    "dataEnvio": { "type": "string", "format": "date-time" }
+                }
+            },
+            "CreateInstituicaoDTO": {
+                "type": "object",
+                "properties": {
+                    "nome": { "type": "string", "minLength": 1 },
+                    "telefone": { "type": "string", "minLength": 1 },
+                    "cnpj": { "type": "string", "minLength": 1 },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "minLength": 1
+                    },
+                    "endereco": { "$ref": "#/components/schemas/Endereco" }
+                },
+                "required": ["cnpj", "email", "endereco", "nome", "telefone"]
+            },
+            "FormacaoRequestDTO": {
+                "type": "object",
+                "properties": {
+                    "titulo": { "type": "string" },
+                    "instituicao": { "type": "string" },
+                    "dataInicio": { "type": "string", "format": "date" },
+                    "dataConclusao": { "type": "string", "format": "date" },
+                    "descricao": { "type": "string" }
+                }
+            },
+            "EducadorResponseDTO": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "integer", "format": "int64" },
+                    "nome": { "type": "string" },
+                    "email": { "type": "string" },
+                    "matricula": { "type": "string" },
+                    "titulo": { "type": "string" },
+                    "formacaoAcademica": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FormacaoResponseDTO"
+                        }
+                    }
+                }
+            },
+            "FormacaoResponseDTO": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "integer", "format": "int64" },
+                    "titulo": { "type": "string" },
+                    "instituicao": { "type": "string" },
+                    "dataInicio": { "type": "string", "format": "date" },
+                    "dataConclusao": { "type": "string", "format": "date" },
+                    "descricao": { "type": "string" }
+                }
+            },
+            "CreateDisciplinaDTO": {
+                "type": "object",
+                "properties": {
+                    "nome": { "type": "string", "minLength": 1 },
+                    "descricao": { "type": "string", "minLength": 1 },
+                    "idEducadorResponsavel": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "idInstituicao": { "type": "integer", "format": "int64" }
+                },
+                "required": [
+                    "descricao",
+                    "idEducadorResponsavel",
+                    "idInstituicao",
+                    "nome"
+                ]
+            },
+            "EstudanteSummaryDTO": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "integer", "format": "int64" },
+                    "nome": { "type": "string" },
+                    "cpf": { "type": "string" },
+                    "email": { "type": "string" },
+                    "matricula": { "type": "string" },
+                    "periodo": {
+                        "type": "string",
+                        "enum": ["MATUTINO", "VESPERTINO", "NOTURNO"]
+                    },
+                    "anoEscolar": {
+                        "type": "string",
+                        "enum": [
+                            "PRIMEIRO_ANO",
+                            "SEGUNDO_ANO",
+                            "TERCEIRO_ANO",
+                            "QUARTO_ANO",
+                            "QUINTO_ANO",
+                            "SEXTO_ANO",
+                            "SETIMO_ANO",
+                            "OITAVO_ANO",
+                            "NONO_ANO",
+                            "PRIMEIO_ANO_EM",
+                            "SEGUNDO_ANO_EM",
+                            "TERCEIRO_ANO_EM"
+                        ]
+                    },
+                    "telefone": { "type": "string" },
+                    "genero": {
+                        "type": "string",
+                        "enum": [
+                            "MASCULINO",
+                            "FEMININO",
+                            "OUTRO",
+                            "NAO_INFORMAR"
+                        ]
+                    },
+                    "dataNascimento": { "type": "string", "format": "date" }
+                }
+            },
+            "CreateComentarioDTO": {
+                "type": "object",
+                "properties": {
+                    "conteudo": {
+                        "type": "string",
+                        "maxLength": 280,
+                        "minLength": 0
+                    }
+                },
+                "required": ["conteudo"]
+            },
+            "RegisterDTO": {
+                "type": "object",
+                "properties": {
+                    "nome": { "type": "string", "minLength": 1 },
+                    "cpf": { "type": "string", "minLength": 1 },
+                    "email": { "type": "string", "minLength": 1 },
+                    "telefone": { "type": "string", "minLength": 1 },
+                    "genero": {
+                        "type": "string",
+                        "enum": [
+                            "MASCULINO",
+                            "FEMININO",
+                            "OUTRO",
+                            "NAO_INFORMAR"
+                        ]
+                    },
+                    "dataNascimento": { "type": "string", "format": "date" },
+                    "senha": { "type": "string", "minLength": 1 },
+                    "userType": {
+                        "type": "string",
+                        "enum": ["ESTUDANTE", "EDUCADOR", "GESTOR"]
+                    },
+                    "matricula": { "type": "string" },
+                    "titulo": { "type": "string" },
+                    "periodo": {
+                        "type": "string",
+                        "enum": ["MATUTINO", "VESPERTINO", "NOTURNO"]
+                    },
+                    "anoEscolar": {
+                        "type": "string",
+                        "enum": [
+                            "PRIMEIRO_ANO",
+                            "SEGUNDO_ANO",
+                            "TERCEIRO_ANO",
+                            "QUARTO_ANO",
+                            "QUINTO_ANO",
+                            "SEXTO_ANO",
+                            "SETIMO_ANO",
+                            "OITAVO_ANO",
+                            "NONO_ANO",
+                            "PRIMEIO_ANO_EM",
+                            "SEGUNDO_ANO_EM",
+                            "TERCEIRO_ANO_EM"
+                        ]
+                    },
+                    "cargo": { "type": "string" },
+                    "educadorValido": { "type": "boolean" },
+                    "estudanteValido": { "type": "boolean" }
+                },
+                "required": ["cpf", "email", "nome", "senha", "telefone"]
+            },
+            "AuthenticationDTO": {
+                "type": "object",
+                "properties": {
+                    "email": { "type": "string" },
+                    "senha": { "type": "string" }
+                }
+            },
+            "CreatePerfilAcessibilidadeDTO": {
+                "type": "object",
+                "properties": {
+                    "tipoDeficiencia": {
+                        "type": "string",
+                        "enum": [
+                            "NENHUMA",
+                            "VISUAL",
+                            "AUDITIVA",
+                            "MOTORA",
+                            "COGNITIVA",
+                            "OUTRA"
+                        ]
+                    },
+                    "usaLeitorDeTela": { "type": "boolean" },
+                    "modoAltoContraste": { "type": "boolean" },
+                    "tamanhoFonte": { "type": "integer", "format": "int32" },
+                    "talkBack": { "type": "boolean" }
+                },
+                "required": [
+                    "modoAltoContraste",
+                    "talkBack",
+                    "tamanhoFonte",
+                    "tipoDeficiencia",
+                    "usaLeitorDeTela"
+                ]
+            },
+            "AvaliarRespostaDTO": {
+                "type": "object",
+                "properties": {
+                    "respostaId": { "type": "integer", "format": "int64" },
+                    "nota": { "type": "number", "format": "double" },
+                    "comentario": { "type": "string" }
+                },
+                "required": ["nota", "respostaId"]
+            },
+            "UsuarioDetailsDTO": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "integer", "format": "int64" },
+                    "nome": { "type": "string" },
+                    "email": { "type": "string" },
+                    "telefone": { "type": "string" },
+                    "genero": {
+                        "type": "string",
+                        "enum": [
+                            "MASCULINO",
+                            "FEMININO",
+                            "OUTRO",
+                            "NAO_INFORMAR"
+                        ]
+                    },
+                    "dataNascimento": { "type": "string", "format": "date" },
+                    "instituicao": {
+                        "$ref": "#/components/schemas/InstituicaoDetailsDTO"
+                    },
+                    "roles": {
+                        "type": "string",
+                        "enum": [
+                            "ESTUDANTE",
+                            "EDUCADOR",
+                            "GESTOR",
+                            "GUEST",
+                            "USER",
+                            "ADMIN"
+                        ]
+                    }
+                }
+            },
+            "TarefaDetailsDTO": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "integer", "format": "int64" },
+                    "titulo": { "type": "string" },
+                    "conteudo": { "type": "string" },
+                    "dataEnvio": { "type": "string", "format": "date-time" },
+                    "dataExpiracao": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "valorTotal": { "type": "number", "format": "double" },
+                    "permitirArquivoResposta": { "type": "boolean" },
+                    "disciplinaNome": { "type": "string" },
+                    "autorNome": { "type": "string" },
+                    "respostas": {
+                        "type": "array",
+                        "items": { "$ref": "#/components/schemas/RespostaDTO" }
+                    }
+                }
+            },
+            "InstituicaoEmailDTO": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "minLength": 1
+                    }
+                },
+                "required": ["email"]
+            },
+            "InstituicaoCnpjDTO": {
+                "type": "object",
+                "properties": { "cnpj": { "type": "string", "minLength": 1 } },
+                "required": ["cnpj"]
+            },
+            "GestorGetByEmailDTO": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "minLength": 1
+                    }
+                },
+                "required": ["email"]
+            },
+            "EstudanteListDTO": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "integer", "format": "int64" },
+                    "nome": { "type": "string" },
+                    "email": { "type": "string" },
+                    "matricula": { "type": "string" },
+                    "anoEscolar": {
+                        "type": "string",
+                        "enum": [
+                            "PRIMEIRO_ANO",
+                            "SEGUNDO_ANO",
+                            "TERCEIRO_ANO",
+                            "QUARTO_ANO",
+                            "QUINTO_ANO",
+                            "SEXTO_ANO",
+                            "SETIMO_ANO",
+                            "OITAVO_ANO",
+                            "NONO_ANO",
+                            "PRIMEIO_ANO_EM",
+                            "SEGUNDO_ANO_EM",
+                            "TERCEIRO_ANO_EM"
+                        ]
+                    },
+                    "periodo": {
+                        "type": "string",
+                        "enum": ["MATUTINO", "VESPERTINO", "NOTURNO"]
+                    }
+                }
+            },
+            "FormacaoListResponseDTO": {
+                "type": "object",
+                "properties": {
+                    "formacoes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FormacaoResponseDTO"
+                        }
+                    },
+                    "totalRegistros": { "type": "integer", "format": "int32" }
+                }
+            }
+        }
+    }
+}

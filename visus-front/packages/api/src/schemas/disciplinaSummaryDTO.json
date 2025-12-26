@@ -1,0 +1,1 @@
+{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"nome":{"type":"string"},"descricao":{"type":"string"},"educadorResponsavel":{"type":"string"},"instituicao":{"type":"string"},"alunos":{"type":"integer","format":"int32"}},"x-readme-ref-name":"DisciplinaSummaryDTO"}

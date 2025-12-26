@@ -1,0 +1,1 @@
+{"type":"object","properties":{"tarefaId":{"type":"integer","format":"int64"},"conteudoTexto":{"type":"string"},"arquivo":{"type":"string","format":"binary"}},"x-readme-ref-name":"CreateRespostaMultipartDTO"}

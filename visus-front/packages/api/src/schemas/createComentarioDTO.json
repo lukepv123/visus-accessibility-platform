@@ -1,0 +1,1 @@
+{"type":"object","properties":{"conteudo":{"type":"string","maxLength":280,"minLength":0}},"required":["conteudo"],"x-readme-ref-name":"CreateComentarioDTO"}

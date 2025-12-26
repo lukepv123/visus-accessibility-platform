@@ -1,0 +1,75 @@
+# ─────────────────────────────
+# Monorepo (Node/TypeScript)
+# ─────────────────────────────
+**/node_modules/
+**/.pnpm-store/
+**/.eslintcache
+**/*.tsbuildinfo
+
+# Logs
+**/npm-debug.log*
+**/yarn-error.log*
+**/pnpm-debug.log*
+**/expo-debug.log
+**/debug.log
+**/*.log
+
+# Build / caches
+**/dist/
+**/build/
+**/.cache/
+**/.vite/
+**/coverage/
+**/.turbo/
+**/.next/
+**/.parcel-cache/
+
+# IDE / SO
+**/.idea/
+# **/.vscode/
+**/.DS_Store
+**/Thumbs.db
+
+# Env (mantenha apenas exemplos)
+**/.env
+**/.env.*
+!.env.example
+
+# ─────────────────────────────
+# Web (Vite/React)
+# ─────────────────────────────
+apps/web/.vite/
+apps/web/coverage/
+
+# ─────────────────────────────
+# Mobile (Expo / React Native)
+# ─────────────────────────────
+# Expo / Metro
+**/.expo/
+**/.expo-shared/
+**/.metro-cache/
+**/metro-cache/
+**/tmp/metro-*
+
+# Android (gerado no prebuild/bare)
+apps/mobile/android/.gradle/
+apps/mobile/android/.cxx/
+apps/mobile/android/captures/
+apps/mobile/android/local.properties
+apps/mobile/android/app/build/
+apps/mobile/android/build/
+**/*.keystore
+**/*.jks
+
+# iOS (gerado no prebuild/bare)
+apps/mobile/ios/build/
+apps/mobile/ios/DerivedData/
+apps/mobile/ios/Pods/
+apps/mobile/ios/*.pbxuser
+apps/mobile/ios/*.mode1v3
+apps/mobile/ios/*.mode2v3
+apps/mobile/ios/*.perspectivev3
+apps/mobile/ios/xcuserdata/
+apps/mobile/ios/*.moved-aside
+apps/mobile/ios/*.xccheckout
+apps/mobile/ios/*.xcuserstate

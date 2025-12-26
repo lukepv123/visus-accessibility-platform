@@ -1,0 +1,1 @@
+{"type":"object","properties":{"tarefaId":{"type":"integer","format":"int64"},"estudanteId":{"type":"integer","format":"int64"},"caminhoAnexo":{"type":"string"},"conteudoTexto":{"type":"string"}},"required":["estudanteId","tarefaId"],"x-readme-ref-name":"CreateRespostaDTO"}

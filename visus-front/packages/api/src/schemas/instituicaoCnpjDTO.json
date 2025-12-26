@@ -1,0 +1,1 @@
+{"type":"object","properties":{"cnpj":{"type":"string","minLength":1}},"required":["cnpj"],"x-readme-ref-name":"InstituicaoCnpjDTO"}

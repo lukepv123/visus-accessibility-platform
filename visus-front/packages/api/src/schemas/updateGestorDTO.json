@@ -1,0 +1,1 @@
+{"type":"object","properties":{"nome":{"type":"string"},"telefone":{"type":"string"},"genero":{"type":"string","enum":["MASCULINO","FEMININO","OUTRO","NAO_INFORMAR"]},"dataNascimento":{"type":"string","format":"date"},"matricula":{"type":"string"},"cargo":{"type":"string"}},"x-readme-ref-name":"UpdateGestorDTO"}

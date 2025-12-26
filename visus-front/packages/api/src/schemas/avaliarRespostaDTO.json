@@ -1,0 +1,1 @@
+{"type":"object","properties":{"respostaId":{"type":"integer","format":"int64"},"nota":{"type":"number","format":"double"},"comentario":{"type":"string"}},"required":["nota","respostaId"],"x-readme-ref-name":"AvaliarRespostaDTO"}

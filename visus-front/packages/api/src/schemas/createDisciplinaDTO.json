@@ -1,0 +1,1 @@
+{"type":"object","properties":{"nome":{"type":"string","minLength":1},"descricao":{"type":"string","minLength":1},"idEducadorResponsavel":{"type":"integer","format":"int64"},"idInstituicao":{"type":"integer","format":"int64"}},"required":["descricao","idEducadorResponsavel","idInstituicao","nome"],"x-readme-ref-name":"CreateDisciplinaDTO"}

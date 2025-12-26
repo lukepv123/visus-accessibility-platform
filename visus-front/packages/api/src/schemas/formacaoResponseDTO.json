@@ -1,0 +1,1 @@
+{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"titulo":{"type":"string"},"instituicao":{"type":"string"},"dataInicio":{"type":"string","format":"date"},"dataConclusao":{"type":"string","format":"date"},"descricao":{"type":"string"}},"x-readme-ref-name":"FormacaoResponseDTO"}
